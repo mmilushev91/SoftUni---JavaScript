@@ -4,11 +4,10 @@ function solve(arr) {
   const numbers = arr.slice(0, arrlastIndex);
 
   for (let i = 0; i < rotations; i++) {
-    numbers.push(numbers.shift());
+    numbers.unshift(numbers.pop());
   }
-
   console.log(numbers.join(" "));
 }
 
-// solve(["1", "2", "3", "4", "2"]);
+solve(["1", "2", "3", "4", "2"]);
 solve(["Banana", "Orange", "Coconut", "Apple", "15"]);
