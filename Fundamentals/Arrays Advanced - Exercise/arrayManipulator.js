@@ -9,10 +9,8 @@ function solve(array, commands) {
       arr.splice(idx, 0, ...numElements);
     },
     contains(nums, arr) {
-  
       const [el] = nums;
       const arrLength = arr.length;
-      
       for (let i = 0; i < arrLength; i++) {
         
         if (arr[i] === el) {
@@ -38,18 +36,14 @@ function solve(array, commands) {
       const arrLength = arr.length;
       
       for (let i = 0; i < arrLength; i+= 2) {
-        
         const num1 = arr[i];
         let num2;
-        
         if (i + 1 < arrLength) {
           num2 = arr[i + 1];
         }
-        
         if (num2) {
           sumPairsArr.push(num1 + num2);
         }
-        
         else {
           sumPairsArr.push(num1);
         }
@@ -62,7 +56,6 @@ function solve(array, commands) {
       console.log(`[ ${arr.join(", ")} ]`)
     }
   }
-  
   for (const line of commands) {
     const [command, ...rest] = line.split(" ");
     numbers = rest.map(num => Number(num));
