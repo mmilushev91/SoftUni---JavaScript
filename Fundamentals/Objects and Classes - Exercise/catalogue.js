@@ -9,23 +9,18 @@ function solve(data) {
       dataObj[key] = [];
     }
     dataObj[key].push([product, price]);
-    
-    
   }
-
   const sortedDateObj = Object.entries(dataObj).sort((a, b) => a[0].localeCompare(b[0]));
- 
- 
+  
   for (const line of sortedDateObj) {
     const [letter, products] = line;
-    console.log(letter);
+    products.sort()
+    console.log(letter)
     
     const productsLength = products.length;
     
-    for (let i = 0; i < productsLength - 1; i+= 2) {
-      console.log(` ${products[i]}: ${products[i+1]}`)
-    }
-    
-    
+    for (let i = 0; i < productsLength; i++) {
+      console.log(`  ${products[i][0]}: ${products[i][1]}`)
+    } 
   }
 }
