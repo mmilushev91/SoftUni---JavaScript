@@ -4,46 +4,33 @@ function solve(matrix) {
 
   for (let i = 0; i < matrixLength; i++) {
     const rowLength = matrix[i].length;
-    const upIdx = i - 1;
-    const downIdx = i + 1;
-    
+
     for (let j = 0; j < rowLength; j++) {
-      const leftIdx = j - 1;
-      const rightIdx = j + 1;
-      
-      
-      if (isValid(upIdx, matrixLength)) {
-       
-        if (matrix[upIdx][j] === matrix[i][j]) {
-          
-          cords.push([upIdx, j, i, j])
-        }
+      const currentVal = matrix[i][j];
+
+      // Check RIGHT neighbor
+      if (j + 1 < rowLength && matrix[i][j + 1] === currentVal) {
+        cords.push([i, j, i, j + 1]);
       }
-      
-      if (isValid(downIdx, matrixLength)) {
-          
-        if (matrix[downIdx][j] === matrix[i][j]) {
-          cords.push([downIdx, j, i, j])
-        }
-      }
-      
-      if (isValid(leftIdx, rowLength)) {
-        if (matrix[i][leftIdx] === matrix[i][j]) {
-          cords.push([i, leftIdx, i, j])
-        }
-      }
-      
-      if (isValid(rightIdx, rowLength)) {
-        if (matrix[i][rightIdx] === matrix[i][j]) {
-          cords.push([i, rightIdx, i, j])
-        }
+
+      // Check DOWN neighbor
+      if (i + 1 < matrixLength && matrix[i + 1][j] === currentVal) {
+        cords.push([i, j, i + 1, j]);
       }
     }
   }
-  console.log(cords);
-  
-  function isValid(idx, len) {
-    return idx >= 0 && idx < len;
-  }
-
+  console.log(cords.length);
 }
+
+solve([
+  ["2", "3", "4", "7", "0"],
+  ["4", "0", "5", "3", "4"],
+  ["2", "3", "5", "4", "2"],
+  ["9", "8", "7", "5", "4"],
+]);
+
+solve([
+  ["test", "yes", "yo", "ho"],
+  ["well", "done", "yo", "6"],
+  ["not", "done", "yet", "5"],
+]);
