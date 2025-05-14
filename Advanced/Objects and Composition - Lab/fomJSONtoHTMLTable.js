@@ -1,38 +1,35 @@
-function solve(studentInfo) {
-  const studentInfoArr = JSON.parse(studentInfo);
-  const studentInfoArrLength = studentInfoArr.length;
-  const tableHeaders = Object.keys(studentInfoArr[0]);
-  const tableHeadersLength = tableHeaders.length;
-  const table = []
+function jsonToHtmlTable(json) {
+  let arr = JSON.parse(json);
+  let outputArr = ["<table>"];
 
-  for (let i = 0; i < studentInfoArrLength; i++) {
-    let row = "    <tr>";
-    if (i === 0) {
-      let tableHeader = "    <tr>";
-      table.push("<table>");
-      
-      tableHeaders.forEach(key => {
-        tableHeader += `<th>${key}</th>`
-      })
-      
-      tableHeader+="</tr>"
-      table.push(tableHeader);
-      
-    }
+  outputArr.push(makeKeyRow(arr));
+  arr.forEach((obj) => outputArr.push(makeValueRow(obj)));
+  
+  outputArr.push("</table>");
+  
+  function makeKeyRow(arr) { 
+    const keys = Object.keys(arr[0]);
+    let line = `    <tr>`
+    keys.forEach((key, i) => {
+      line += `<th>${key}</th>`
+      if (i === keys.length - 1) {
+        line += "</tr>"
+      }
+    })
     
-    tableHeaders.forEach(key => {
-      row += `<td>${studentInfoArr[i][key]}</td>`
-      })
-      
-    row+="</tr>"
-    table.push(row);
-
-    if (i === studentInfoArrLength - 1) {
-      table.push("</table>")
-    }
-    
+    return line;
   }
-  
-  console.log(table.join("\n"))
-  
+  function makeValueRow(obj) {
+     const values = Object.values(obj);
+    let line = `    <tr>`
+    values.forEach((value, i) => {
+      line += `<td>${value}</td>`
+      if (i === values.length - 1) {
+        line += "</tr>"
+      }
+    })
+    return line;
+  }
+  function escapeHtml(value) { };
+  console.log(outputArr.join('\n'));
 }
