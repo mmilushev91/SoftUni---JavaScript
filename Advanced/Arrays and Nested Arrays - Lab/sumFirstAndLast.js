@@ -1,3 +1,5 @@
 function solve(arr) {
-  console.log([arr[0] , arr[arr.length - 1]].map(el => Number(el)).reduce((sum, num) => sum + num))
+  console.log(
+    [arr.shift(), arr.pop()].reduce((sum, num) => sum + Number(num), 0)
+  );
 }
