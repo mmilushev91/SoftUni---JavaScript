@@ -9,7 +9,6 @@ function solve(moves) {
     0: "X",
     1: "O",
   };
-  let winner = false;
   let currentPlayer = "0";
 
   for (const move of moves) {
