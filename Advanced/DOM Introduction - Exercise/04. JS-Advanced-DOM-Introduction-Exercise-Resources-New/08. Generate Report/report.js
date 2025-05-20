@@ -2,27 +2,36 @@ function generateReport() {
     
     const headerColumns = document.querySelectorAll("input");
     const columns = document.getElementsByTagName("td");
-    
+    const textArea = document.getElementById("output");
+    console.log(columns)
     const checkedIndexes = findCheckedIndexes(headerColumns);
-    console.log("length: ", columns.length)
-    const objArr = [];
-    for (let i = 0; i < columns.length; i += 7) {
-      
-      for (let j = 0; j < checkedIndexes.length; j++) {
-        const key = headerColumns[j].parentElement.textContent.toLowerCase();
-        console.log(i + checkedIndexes[j]);
-        
-        objArr.push({
+    const objArr = createObjArr();
+    const objArrJSON = JSON.stringify(objArr);
+    textArea.value = objArrJSON;
+
+    function createObjArr() {
+        const objArr = [];
+        for (let i = 0; i < columns.length; i += 7) {
           
-        })
-      }
-    }
-
+      
+          for (let j = 0; j < checkedIndexes.length; j++) {
+            const checkedIndex = checkedIndexes[j];
+            
+            
+            const key = headerColumns[checkedIndex].name;
+            const value = columns[i + checkedIndex].textContent
+            if (value) {
+              const obj = {};
+              obj[key] = value;
+              objArr.push(obj);
+              
+            }
+          }
+          
+        }
     
-    // checkedIndexes.forEach((i) => {
-    //   headerColumns[i].parentElement.textContent = "Checked";
-    //   });
-
+      return (objArr);
+    }
     function findCheckedIndexes(iter) {
       const indexes = [];
       iter.forEach((el, i) => {
