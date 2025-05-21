@@ -101,3 +101,105 @@ function solve() {
     return message.join(" ");
   }
 }
+
+function solve() {
+  document.querySelector("#btnSend").addEventListener("click", onClick);
+
+  function onClick() {
+    //Tasks:
+    //1. input comes as stringed array
+    //2. createRestaurantsAssArr
+    //2. find the best restaurant - the one with
+    //highest avg salary 
+    //3. display workers of the best restaurant with their salaries
+    //workers should be sorted in descending order by salaries
+    
+    //solution
+    
+    //set variables
+    const textAreaEl = document.querySelector("textArea");
+    const [paragraph1, paragraph2] = document.getElementsByTagName("p");
+    
+    const restaurantsObjects = createRestaurantsObject(textAreaEl);
+    const bestRestaurant = findBestRestaurant(restaurantsObjects);
+    const bestRestaurantMessage = createBestRestaurantMessage(bestRestaurant);
+    const bestRestaurantWorkersMessage = createBestRestaurantWorkersMessage(bestRestaurant.workers);
+    paragraph1.textContent = bestRestaurantMessage;
+    paragraph2.textContent = bestRestaurantWorkersMessage;
+    
+    
+    //functions
+    function createRestaurantsObject(inputEl){
+      const arr = JSON.parse(inputEl.value);
+      const obj = {};
+      //{ restaurantName = {
+          // workers = {
+              // worker: salary
+          // },
+            // workersCount: 0,
+            // totalSalary:
+            // bestSalary
+      //},
+      
+      for (const item of arr) {
+        const [restName, workers] = item.split(" - ");
+          if (!obj.hasOwnProperty(restName)) {
+            obj[restName] = {};
+            obj[restName].workers = {};
+            obj[restName].workersCount = 0;
+            obj[restName].totalSalary = 0;
+            obj[restName].bestSalary = 0;
+          }
+        const currentRestaurant = obj[restName];
+        
+        for (const worker of workers.split(", ")) {
+          let [name, salary] = worker.split(" ");
+          salary = Number(salary);
+          
+          currentRestaurant.workers[name] = salary;
+          currentRestaurant.workersCount++;
+          currentRestaurant.totalSalary += salary;
+          
+          if (currentRestaurant.bestSalary < salary) {
+            currentRestaurant.bestSalary = salary;
+          }
+          
+        }
+      } 
+      
+      return obj;
+    }
+    function findBestRestaurant(obj) {
+      let highestAvgSalary = 0;
+      let bestRestaurant;
+      
+      for (const key in obj) {
+        const currentObj = obj[key];
+        const avgSalary = currentObj.totalSalary / currentObj.workersCount;
+        currentObj.avgSalary = avgSalary;
+        currentObj.name = key;
+        
+        if (avgSalary > highestAvgSalary) {
+          highestAvgSalary = avgSalary;
+          bestRestaurant = currentObj;
+        }
+        
+      }
+      return bestRestaurant;
+    }
+    function createBestRestaurantMessage(obj) {
+      return `Name: ${obj.name} Average Salary: ${obj.avgSalary.toFixed(2)} Best Salary: ${obj.bestSalary.toFixed(2)}`
+    }
+    //obj = {worker: name, ...}
+    function createBestRestaurantWorkersMessage(obj) {
+      const sortedWorkers = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+      const output = sortedWorkers.reduce((acc, el) => {
+          acc.push(`Name: ${el[0]} With Salary: ${el[1]}`);
+          return acc;
+        }
+        , []);
+      return output.join(" ");
+    }
+  }
+}
+
