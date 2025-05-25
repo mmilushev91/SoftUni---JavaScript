@@ -1,47 +1,30 @@
 function generateReport() {
-    
-    const headerColumns = document.querySelectorAll("input");
-    const columns = document.getElementsByTagName("td");
-    const textArea = document.getElementById("output");
-    console.log(columns)
-    const checkedIndexes = findCheckedIndexes(headerColumns);
-    const objArr = createObjArr();
-    const objArrJSON = JSON.stringify(objArr);
-    textArea.value = objArrJSON;
+  const output = document.getElementById("output");
+  const headers = Array.from(document.querySelectorAll("thead tr th"));
+  const rows = Array.from(document.querySelectorAll("tbody tr"));
 
-    function createObjArr() {
-        const objArr = [];
-        for (let i = 0; i < columns.length; i += 7) {
-          
-      
-          for (let j = 0; j < checkedIndexes.length; j++) {
-            const checkedIndex = checkedIndexes[j];
-            
-            
-            const key = headerColumns[checkedIndex].name;
-            const value = columns[i + checkedIndex].textContent
-            if (value) {
-              const obj = {};
-              obj[key] = value;
-              objArr.push(obj);
-              
-            }
-          }
-          
-        }
-    
-      return (objArr);
+  // Get the indexes and names of the checked columns
+  const selectedColumns = headers
+    .map((th, index) => {
+      const checkbox = th.querySelector("input");
+      return checkbox && checkbox.checked
+        ? { name: checkbox.name, index }
+        : null;
+    })
+    .filter((col) => col !== null);
+
+  const result = [];
+
+  for (const row of rows) {
+    const cells = row.querySelectorAll("td");
+    const obj = {};
+
+    for (const col of selectedColumns) {
+      obj[col.name] = cells[col.index].textContent.trim();
     }
-    function findCheckedIndexes(iter) {
-      const indexes = [];
-      iter.forEach((el, i) => {
-        
-        if (el.checked) {
-          indexes.push(i);
-        }
-      });
-      
-      return indexes;
-    }
-    
+
+    result.push(obj);
+  }
+
+  output.value = JSON.stringify(result, null, 2); // formatted JSON
 }
