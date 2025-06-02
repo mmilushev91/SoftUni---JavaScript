@@ -1,0 +1,14 @@
+function solve() {
+    const taskInput = document.getElementById("task");
+    const descriptionTextArea = document.getElementById("description");
+    const dateInput = document.getElementById("date");
+    const addBtn = document.getElementById("add");
+    console.log(taskInput, descriptionTextArea, dateInput);
+    addBtn.addEventListener("click", function(e) {
+      
+      e.preventDefault();
+      if (!taskInput.value || descriptionTextArea.value || dateInput.value) {
+        console.log("empty")
+      }
+    })
+}
