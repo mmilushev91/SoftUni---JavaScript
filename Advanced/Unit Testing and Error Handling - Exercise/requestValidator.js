@@ -7,7 +7,7 @@ function requestValidator(obj) {
         throw new Error(`Invalid request header: Invalid Method`);
     }
 
-    if (!obj.uri || !obj.uri === '*' || !obj.uri.match(uriPatern)) { 
+    if (!obj.uri || !(obj.uri === '*' || !obj.uri.match(uriPatern))) { 
         throw new Error(`Invalid request header: Invalid URI`);
     }
 

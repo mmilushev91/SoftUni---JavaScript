@@ -1,0 +1,23 @@
+{
+  "name": "unit-testing-and-error-handling---exercise",
+  "version": "1.0.0",
+  "description": "Testing exercise",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "testing",
+    "errors"
+  ],
+  "author": "MM",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^5.2.0",
+    "save-dev": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "mocha": "^11.6.0"
+  }
+}
